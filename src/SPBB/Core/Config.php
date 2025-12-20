@@ -37,9 +37,10 @@ class Config
     {
         $this->config = new Data();
 
-        $this->config->set(key: 'path.working_dir', value: $working_dir);
-        $this->config->set(key: 'path.public_dir', value: $public_dir);
-        $this->config->set(key: 'path.config_dir', value: $working_dir . '/config');
+        $this->config->set(key: 'path.working', value: $working_dir);
+        $this->config->set(key: 'path.public', value: $public_dir);
+        $this->config->set(key: 'path.config', value: $working_dir . '/config');
+        $this->config->set(key: 'path.container', value: $working_dir . '/container');
 
         if (! defined(constant_name: 'SPBB_ENVIRONMENT'))
             define(constant_name: 'SPBB_ENVIRONMENT', value:  'prod');
