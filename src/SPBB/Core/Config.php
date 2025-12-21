@@ -26,21 +26,21 @@ class Config
     /**
      * Class constructor
      *
-     * @param string $working_dir
-     * @param string $public_dir
+     * @param string $working
+     * @param string $public
      * @return void
      */
     public function __construct(
-        string $working_dir,
-        string $public_dir
+        string $working,
+        string $public
     )
     {
         $this->config = new Data();
 
-        $this->config->set(key: 'path.working', value: $working_dir);
-        $this->config->set(key: 'path.public', value: $public_dir);
-        $this->config->set(key: 'path.config', value: $working_dir . '/config');
-        $this->config->set(key: 'path.container', value: $working_dir . '/container');
+        $this->config->set(key: 'path.working', value: $working);
+        $this->config->set(key: 'path.public', value: $public);
+        $this->config->set(key: 'path.config', value: $working . '/config');
+        $this->config->set(key: 'path.container', value: $working . '/container');
 
         if (! defined(constant_name: 'SPBB_ENVIRONMENT'))
             define(constant_name: 'SPBB_ENVIRONMENT', value:  'prod');
@@ -62,14 +62,14 @@ class Config
         if (in_array(needle: $name, haystack: $this->loaded, strict: true)) return;
 
         // load sane defaults
-        $default_config = $this->config->get(key: 'path.config_dir') . '/' . $name . '.php';
-        if (! file_exists($default_config)) {
+        $default_config = $this->config->get(key: 'path.config') . '/' . $name . '.php';
+        if (file_exists($default_config)) {
             (require_once $default_config)($this);
         }
 
         // Load environment overrides
-        $environment_config = $this->config->get(key: 'path.config_dir') . '/' . $this->config->get(key: 'app.environment') . '/' . $name . '.php';
-        if (! file_exists($environment_config)) {
+        $environment_config = $this->config->get(key: 'path.config') . '/' . $this->config->get(key: 'app.environment') . '/' . $name . '.php';
+        if (file_exists($environment_config)) {
             (require_once $environment_config)($this);
         }
     }

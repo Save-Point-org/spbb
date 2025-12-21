@@ -36,8 +36,8 @@ class SPBB
     )
     {
         $config = new Config(
-            working_dir: $working_dir,
-            public_dir: $public_dir,
+            working: $working_dir,
+            public: $public_dir,
         );
 
         switch ($config->get(key: 'app.environment', default: 'prod')) {
@@ -58,6 +58,11 @@ class SPBB
         $this->app = $container->get(App::class);
     }
 
+    /**
+     * Starts the instance
+     *
+     * @return void
+     */
     public function run(): void
     {
         $this->app->run();

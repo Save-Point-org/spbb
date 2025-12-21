@@ -15,4 +15,4 @@ else {
     exit($error_message);
 }
 
-(new SPBB($public_dir, $working_dir))->run();
+(new SPBB(working_dir: $working_dir, public_dir: $public_dir))->run();
