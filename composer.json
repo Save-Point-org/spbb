@@ -17,7 +17,8 @@
         "php-di/php-di": "^7.1",
         "dflydev/dot-access-data": "^3.0",
         "ext-pdo": "*",
-        "selective/basepath": "^2.2"
+        "selective/basepath": "^2.2",
+        "odan/session": "^6.1"
     },
     "autoload": {
         "psr-4": {
