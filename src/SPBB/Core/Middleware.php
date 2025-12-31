@@ -2,7 +2,6 @@
 
 namespace SavePointOrg\SPBB\Core;
 
-use SavePointOrg\SPBB\Core\Config;
 use Slim\App;
 
 class Middleware

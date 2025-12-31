@@ -4,6 +4,7 @@ use Odan\Session\SessionInterface;
 use Odan\Session\SessionManagerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use SavePointOrg\SPBB\Core\Config;
+use SavePointOrg\SPBB\Core\LoggerFactoryInterface;
 use Selective\BasePath\BasePathMiddleware;
 use Slim\App;
 use Slim\Middleware\BodyParsingMiddleware;
@@ -23,6 +24,7 @@ return function (Config $config) {
         BasePathMiddleware::class => require_once $this->config->get('path.container') . '/basePathMiddleware.php',
         sessionInterface::class => require_once $this->config->get('path.container') . '/sessionInterface.php',
         sessionManagerInterface::class => require_once $this->config->get('path.container') . '/sessionManagerInterface.php',
+        LoggerFactoryInterface::class => require_once $this->config->get('path.container') . '/loggerFactoryInterface.php',
     ]);
 
 };
