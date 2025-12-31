@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use SavePointOrg\SPBB\Core\Config;
 use Slim\Middleware\BodyParsingMiddleware;

@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use Psr\Http\Message\ResponseFactoryInterface;
 use SavePointOrg\SPBB\Core\Config;
 use Slim\App;
 use Slim\Middleware\BodyParsingMiddleware;
@@ -14,6 +15,7 @@ return function (Config $config) {
         ErrorMiddleware::class => require_once $this->config->get('path.container') . '/errorMiddleware.php',
         BodyParsingMiddleware::class => require_once $this->config->get('path.container') . '/bodyParsingMiddleware.php',
         RoutingMiddleware::class => require_once $this->config->get('path.container') . '/routingMiddleware.php',
+        ResponseFactoryInterface::class => require_once $this->config->get('path.container') . '/responseFactoryInterface.php',
     ]);
 
 };

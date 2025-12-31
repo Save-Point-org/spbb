@@ -15,7 +15,8 @@
         "nyholm/psr7": "^1.8",
         "nyholm/psr7-server": "^1.1",
         "php-di/php-di": "^7.1",
-        "dflydev/dot-access-data": "^3.0"
+        "dflydev/dot-access-data": "^3.0",
+        "ext-pdo": "*"
     },
     "autoload": {
         "psr-4": {

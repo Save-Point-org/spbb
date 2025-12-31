@@ -1,0 +1,2 @@
+# Let's not commit our actual database settings
+database.php
