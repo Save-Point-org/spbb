@@ -7,15 +7,19 @@ use Slim\App;
 use Slim\Middleware\ErrorMiddleware;
 
 return function (ContainerInterface $container) {
+
+    // Load and configure dependencies
     $app = $container->get(App::class);
     $config = $container->get(Config::class);
     $config->loadConfig(name: 'error');
 
+    // Create logger
     $logger = $container->get(LoggerFactoryInterface::class)
         ->addFile('error.log')
         ->createLogger();
 
-    return new ErrorMiddleware(
+    // Initialize middleware
+    $errorMiddleware = new ErrorMiddleware(
         callableResolver: $app->getCallableResolver(),
         responseFactory: $app->getResponseFactory(),
         displayErrorDetails: $config->get(key: 'error.displayErrorDetails', default: false),
@@ -23,4 +27,13 @@ return function (ContainerInterface $container) {
         logErrorDetails: $config->get(key: 'error.logErrorDetails', default: true),
         logger: $logger,
     );
+
+    // Register custom handlers
+    $errorHandlers = $config->get(key: 'error.errorHandlers', default: []);
+    foreach ($errorHandlers as $exceptionType => $handlerClass) {
+        $errorMiddleware->setErrorHandler($exceptionType, $handlerClass);
+    }
+
+    // Return middleware
+    return $errorMiddleware;
 };

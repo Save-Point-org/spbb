@@ -2,6 +2,7 @@
 
 use Odan\Session\Middleware\SessionStartMiddleware;
 use SavePointOrg\SPBB\Core\Config;
+use SavePointOrg\SPBB\Core\HttpExceptionMiddleware;
 use Selective\BasePath\BasePathMiddleware;
 use Slim\Middleware\BodyParsingMiddleware;
 use Slim\Middleware\ErrorMiddleware;
@@ -13,6 +14,7 @@ return function (Config $config) {
         SessionStartMiddleware::class,
         RoutingMiddleware::class,
         BasePathMiddleware::class,
+        HttpExceptionMiddleware::class,
         ErrorMiddleware::class,
     ]);
 };
