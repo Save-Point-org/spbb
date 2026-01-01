@@ -21,7 +21,6 @@ return function (Config $config) {
         RoutingMiddleware::class => require_once $this->config->get('path.container') . '/routingMiddleware.php',
         PDO::class => require_once $this->config->get('path.container') . '/pdo.php',
         ResponseFactoryInterface::class => require_once $this->config->get('path.container') . '/responseFactoryInterface.php',
-        BasePathMiddleware::class => require_once $this->config->get('path.container') . '/basePathMiddleware.php',
         sessionInterface::class => require_once $this->config->get('path.container') . '/sessionInterface.php',
         sessionManagerInterface::class => require_once $this->config->get('path.container') . '/sessionManagerInterface.php',
         LoggerFactoryInterface::class => require_once $this->config->get('path.container') . '/loggerFactoryInterface.php',

@@ -12,45 +12,42 @@ use Psr\Log\LoggerInterface;
 
 class ErrorHandlerMiddleware implements MiddlewareInterface
 {
+    private ResponseFactoryInterface $responseFactory;
+
     private LoggerInterface $logger;
 
     public function __construct(
-        private ResponseFactoryInterface $responseFactory,
-        LoggerFactoryInterface $loggerFactory,
-    )
-    {
+        ResponseFactoryInterface $responseFactory,
+        LoggerFactoryInterface $loggerFactory
+    ) {
+        $this->responseFactory = $responseFactory;
         $this->logger = $loggerFactory
-            ->addFile(filename: 'error.log')
-            ->createLogger(name: 'errorHandler');
+            ->addFile('error.log')
+            ->createLogger('error_handler_middleware');
     }
 
-    private function setErrorHandler() : void
+    private function setErrorHandler(): void
     {
         $errorLevels = E_ALL;
 
+        // Set custom php error handler
         set_error_handler(
             function ($errorNumber, $errorMessage, $errorFile, $errorLine) {
-                throw new ErrorException(
-                    message: $errorMessage,
-                    code: $errorNumber,
-                    severity: 1,
-                    filename: $errorFile,
-                    line: $errorLine,
-                );
+                throw new ErrorException($errorMessage, $errorNumber, 1, $errorFile, $errorLine);
             },
             $errorLevels
         );
     }
 
-    private function logErrorException(ErrorException $errorException): void
+    private function logErrorException(ErrorException $exception): void
     {
-        $code = $errorException->getCode();
-        $message = $errorException->getMessage();
-        $line = $errorException->getLine();
-        $file = $errorException->getFile();
-        $errorMessage = sprintf('Error number [%s]: %s on line %s in file %s', $code, $message, $line, $file);
+        $code = $exception->getCode();
+        $message = $exception->getMessage();
+        $line = $exception->getLine();
+        $file = $exception->getFile();
+        $errorMessage = sprintf('Error number [%s] %s on line %s in file %s', $code, $message, $line, $file);
 
-        switch ($code) {
+        switch ($exception->getCode()) {
             case E_USER_ERROR:
                 $this->logger->error($errorMessage);
                 break;
@@ -62,8 +59,10 @@ class ErrorHandlerMiddleware implements MiddlewareInterface
         }
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
+    public function process(
+        ServerRequestInterface $request,
+        RequestHandlerInterface $handler
+    ): ResponseInterface {
         try {
             $this->setErrorHandler();
 
@@ -71,7 +70,8 @@ class ErrorHandlerMiddleware implements MiddlewareInterface
         } catch (ErrorException $exception) {
             $this->logErrorException($exception);
 
-            $response = $this->responseFactory->createResponse(code: 500);
+            // Render the response as you need it, for example a JSON response etc.
+            $response = $this->responseFactory->createResponse(500);
             $response->getBody()->write('Internal Server Error');
 
             return $response;

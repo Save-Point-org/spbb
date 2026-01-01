@@ -32,7 +32,7 @@ class LoggerFactory implements LoggerFactoryInterface
 
     public function addFile(string $filename): LoggerFactoryInterface
     {
-        $path = $this->config->get(key: 'path.logs') . '/logs';
+        $path = $this->config->get(key: 'path.logs', default: '');
         $filename = $path . '/' . $filename;
 
         $rotatingFileHandler = new RotatingFileHandler(
