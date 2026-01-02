@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use Middlewares\TrailingSlash;
 use Odan\Session\Middleware\SessionStartMiddleware;
 use SavePointOrg\SPBB\Core\Config;
 use SavePointOrg\SPBB\Core\ErrorHandlerMiddleware;
@@ -13,6 +14,7 @@ return function (Config $config) {
         BodyParsingMiddleware::class,
         SessionStartMiddleware::class,
         RoutingMiddleware::class,
+        TrailingSlash::class,
         HttpExceptionMiddleware::class,
         ErrorHandlerMiddleware::class,
         ErrorMiddleware::class,

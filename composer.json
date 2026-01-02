@@ -18,7 +18,8 @@
         "dflydev/dot-access-data": "^3.0",
         "ext-pdo": "*",
         "odan/session": "^6.1",
-        "monolog/monolog": "^3.9"
+        "monolog/monolog": "^3.9",
+        "middlewares/trailing-slash": "^2.1"
     },
     "autoload": {
         "psr-4": {
